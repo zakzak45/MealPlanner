@@ -1,37 +1,67 @@
-
-import { useState ,useEffect } from "react";
-
+import { useState, useEffect } from "react";
 
 const Meal = () => {
-    const [meals,setMeals] =useState("")
-    const [description,setDescription] =useState([])
-    const [day,setDay] =useState("")
-    const [ingredents,setIngrediants] =useState('')
+    const [meals, setMeals] = useState("");
+    const [description, setDescription] = useState([]);
+    const [day, setDay] = useState("");
+    const [ingredients, setIngredients] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-const MealsData = () => {
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('');//about to put backend locahost link
-        const data = await response.json();
-        console.log(data); 
-        return data;      
-      } catch (err) {
-        console.error('Fetch error:', err);
-        throw err; 
-      }
+    const fetchMealsData = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await fetch('http://localhost:YOUR_PORT/api/meals');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setMeals(data.name || "");
+            setDescription(data.description || []);
+            setDay(data.day || "");
+            setIngredients(data.ingredients || "");
+        } catch (err) {
+            console.error('Fetch error:', err);
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
     };
-    
-  
-  }, []);
 
+    useEffect(() => {
+        fetchMealsData();
+    }, []);
 
-    return ( 
-        <>
-        <>hello meals</>     //doing some testing here
-        </>
-     );
-}
-}
- 
+    if (loading) return <div>Loading meals...</div>;
+    if (error) return <div>Error: {error}</div>;
+
+    return (
+        <div className="meal-container">
+            <h1>Meal Information</h1>
+            {meals && <h2>{meals}</h2>}
+            {day && <p>Day: {day}</p>}
+            
+            {description.length > 0 && (
+                <div>
+                    <h3>Description:</h3>
+                    <ul>
+                        {description.map((item, index) => (
+                            <li key={index}>{item}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+
+            {ingredients && (
+                <div>
+                    <h3>Ingredients:</h3>
+                    <p>{ingredients}</p>
+                </div>
+            )}
+        </div>
+    );
+};
+
 export default Meal;
+ 

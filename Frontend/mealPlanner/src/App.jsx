@@ -1,10 +1,10 @@
-import { useState } from "react";
-import Meal from "./Meal";
+
+import Meal from "./Meal.jsx";
 
 function App() {
   return (
     <>
-      <Meal />
+      <Meal/>
     </>
   );
 }
