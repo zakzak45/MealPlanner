@@ -5,7 +5,10 @@ const controllers =require('./controllers/mealController')
 const mealRoutes =require('./routes/mealRoutes')
 const meals =require('./models/meal.js');
 const app = express()
+const cors = require('cors')
 
+
+app.use(cors())
 app.use(express.json())
 dotenv.config()
 app.use('/meals', mealRoutes)
