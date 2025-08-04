@@ -1,14 +1,12 @@
-import { useState } from "react"
-import Meal from "./Meal"
+import { useState } from "react";
+import Meal from "./Meal";
 
 function App() {
-
-
   return (
     <>
-    <Meal/>
+      <Meal />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

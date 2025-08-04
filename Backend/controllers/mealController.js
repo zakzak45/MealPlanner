@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Meal = require("../models/meal");
 
 const MealController = {
- 
   createMeal: async (req, res) => {
     try {
       const { name, ingredients, day, instructions } = req.body;
@@ -21,7 +20,6 @@ const MealController = {
     }
   },
 
-
   getAllMeals: async (req, res) => {
     try {
       const meals = await Meal.find();
@@ -31,7 +29,6 @@ const MealController = {
     }
   },
 
-  // Get meals by day
   getMealsByDay: async (req, res) => {
     try {
       const { day } = req.params;
@@ -41,7 +38,6 @@ const MealController = {
       res.status(500).json({ error: err.message });
     }
   },
-
 
   updateMeal: async (req, res) => {
     try {
@@ -66,7 +62,6 @@ const MealController = {
       res.status(500).json({ error: err.message });
     }
   },
-
 
   deleteMeal: async (req, res) => {
     try {
